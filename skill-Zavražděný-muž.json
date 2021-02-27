@@ -1,5 +1,48 @@
 {
-  "intents": [],
+  "intents": [
+    {
+      "intent": "co-se-stalo",
+      "examples": [
+        {
+          "text": "Co se děje?"
+        },
+        {
+          "text": "Co se stalo?"
+        }
+      ]
+    },
+    {
+      "intent": "vite-neco",
+      "examples": [
+        {
+          "text": "Co si myslíte?"
+        },
+        {
+          "text": "Dozvěděl jste se něco?"
+        },
+        {
+          "text": "Už něco víme?"
+        },
+        {
+          "text": "Víte něco?"
+        }
+      ]
+    },
+    {
+      "intent": "zkusit-otocit",
+      "examples": [
+        {
+          "text": "Otáčel jste ho?"
+        },
+        {
+          "text": "Otočíme ho?"
+        },
+        {
+          "text": "Zkoušel jste ho otočit?"
+        }
+      ]
+    }
+  ],
   "entities": [
     {
       "entity": "dukaz",
@@ -130,6 +173,91 @@
       "conditions": "$mode == \"dukaz\"",
       "dialog_node": "node_7_1614202457213",
       "previous_sibling": "node_4_1614202428402"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**MANŽELKA: ** Ach, bylo to hrozné!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "**MANŽELKA: ** Právě jsem se vrátila domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami. Když jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. Další věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni. Steve byl ubodán k smrti v obývacím pokoji a já už jsem nemohla udělat nic. Zavolala jsem na policii a čekala na vás tady. Jeden policista je již v obyváku, ale nepouští mě tam. Prý čeká na Vás."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202337716",
+      "conditions": "#co-se-stalo",
+      "dialog_node": "node_9_1614454053458"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**Policista: ** Nevíme zatím vůbec nic, když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka. Zatím nevíme ani kvůli čemu zemřel. Jak koukám, na zádech nejsou žádné rány."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "#vite-neco",
+      "dialog_node": "node_9_1614456312902"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**POLICISTA: ** Ne, ale můžu to zkusit."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Policista otočil mrtvého muže."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "**POLICISTA: ** Hmmm, koukejte, pod tělem se skrýval nůž. A podle povahy rán na těle se dá usoudit, že byl ubodán."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "#zkusit-otocit",
+      "dialog_node": "node_9_1614456700495",
+      "previous_sibling": "node_9_1614456312902"
     },
     {
       "type": "response_condition",
