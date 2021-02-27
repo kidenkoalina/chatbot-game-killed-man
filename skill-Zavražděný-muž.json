@@ -1,0 +1,270 @@
+{
+  "intents": [],
+  "entities": [
+    {
+      "entity": "dukaz",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "dukaz",
+          "synonyms": [
+            "dukaz",
+            "důkaz"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "evidence",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "manželka zavraždila muže",
+          "synonyms": [
+            "manželka zabila manžela",
+            "manželka zavraždila manžela",
+            "manželka zavraždila muže",
+            "muže zabila žena",
+            "muže zavraždila manželka",
+            "žena zabila muže",
+            "žena zavraždila muže"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "žena věděla o noži",
+          "synonyms": [
+            "věděla o noži"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "person",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "manželka",
+          "synonyms": [
+            "manzelka",
+            "manželka",
+            "žena"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "muž",
+          "synonyms": [
+            "manžel",
+            "mrtvý"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "policista",
+          "synonyms": [
+            "policista"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Správně! Vyhrál/a jsi!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202457213",
+      "conditions": "@evidence:(manželka zavraždila muže) && @evidence:(žena věděla o noži)",
+      "dialog_node": "node_10_1614202789083"
+    },
+    {
+      "type": "standard",
+      "title": "Nastavení režimu hry",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "(@person && !input.text.contains(' ')) OR (@dukaz && !input.text.contains(' '))",
+      "dialog_node": "node_3_1614203426909",
+      "previous_sibling": "Vítejte"
+    },
+    {
+      "type": "folder",
+      "title": "policista",
+      "conditions": "$mode == \"policista\"",
+      "dialog_node": "node_4_1614202428402",
+      "previous_sibling": "node_7_1614202337716"
+    },
+    {
+      "type": "folder",
+      "title": "manželka",
+      "conditions": "$mode == \"manzelka\"",
+      "dialog_node": "node_7_1614202337716",
+      "previous_sibling": "node_3_1614203426909"
+    },
+    {
+      "type": "folder",
+      "title": "důkaz",
+      "conditions": "$mode == \"dukaz\"",
+      "dialog_node": "node_7_1614202457213",
+      "previous_sibling": "node_4_1614202428402"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bavíte se s policistou"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1614203426909",
+      "context": {
+        "mode": "policista"
+      },
+      "conditions": "@person:policista",
+      "dialog_node": "response_10_1614203728610",
+      "previous_sibling": "response_7_1614203611901"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Jste v mode \"důkaz\". Zkuste napsat kdo zabil muže a proč si to myslíte."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1614203426909",
+      "context": {
+        "mode": "dukaz"
+      },
+      "conditions": "@dukaz:dukaz",
+      "dialog_node": "response_10_1614203803359",
+      "previous_sibling": "response_10_1614203728610"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bavíte se s manželkou"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1614203426909",
+      "context": {
+        "mode": "manzelka"
+      },
+      "conditions": "@person:manželka",
+      "dialog_node": "response_7_1614203611901"
+    },
+    {
+      "type": "standard",
+      "title": "Start hry",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Dobrý den, jak vám mohu pomoci?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Vítejte"
+    },
+    {
+      "type": "standard",
+      "title": "V ostatních případech",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Nerozumím. Zkuste přeformulovat váš dotaz."
+              },
+              {
+                "text": "Mohl byste se zeptat ještě jednou a trochu jinak? Neporozuměl jsem."
+              },
+              {
+                "text": "Zcela jsem neporozuměl tomu, na co se ptáte."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "V ostatních případech",
+      "previous_sibling": "node_7_1614202457213",
+      "disambiguation_opt_out": true
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Vyberte prosím:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "Nic z výše uvedeného"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Vyberte prosím:"
+    }
+  },
+  "learning_opt_out": false,
+  "name": "Zavražděný muž",
+  "language": "cs",
+  "description": ""
+}
