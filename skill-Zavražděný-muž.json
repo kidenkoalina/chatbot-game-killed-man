@@ -1,6 +1,20 @@
 {
   "intents": [
     {
+      "intent": "2-nemela-vedet-o-nozi",
+      "examples": [
+        {
+          "text": "nemela by o tom vedet"
+        },
+        {
+          "text": "neměla by vědět o noži"
+        },
+        {
+          "text": "žena by neměla o tom vědět"
+        }
+      ]
+    },
+    {
       "intent": "co-se-stalo",
       "examples": [
         {
@@ -154,6 +168,26 @@
       "previous_sibling": "Vítejte"
     },
     {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**POLICISTA: ** Určitě by neměla."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "#2-nemela-vedet-o-nozi && $proreknuti_o_ubodani",
+      "dialog_node": "node_3_1614457617931",
+      "previous_sibling": "node_9_1614456700495"
+    },
+    {
       "type": "folder",
       "title": "policista",
       "conditions": "$mode == \"policista\"",
@@ -199,6 +233,9 @@
         ]
       },
       "parent": "node_7_1614202337716",
+      "context": {
+        "proreknuti_o_ubodani": 1
+      },
       "conditions": "#co-se-stalo",
       "dialog_node": "node_9_1614454053458"
     },
