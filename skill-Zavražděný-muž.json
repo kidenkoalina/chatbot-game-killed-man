@@ -26,6 +26,29 @@
       ]
     },
     {
+      "intent": "kdo_je",
+      "examples": [
+        {
+          "text": "Jak se znáte s?"
+        },
+        {
+          "text": "Kdo je?"
+        },
+        {
+          "text": "Odkud znáte?"
+        }
+      ]
+    },
+    {
+      "intent": "start",
+      "examples": [
+        {
+          "text": "start"
+        }
+      ],
+      "description": ""
+    },
+    {
       "intent": "vite-neco",
       "examples": [
         {
@@ -103,26 +126,30 @@
       "values": [
         {
           "type": "synonyms",
-          "value": "manželka",
+          "value": "David",
+          "synonyms": [
+            "David",
+            "policista"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Mary",
           "synonyms": [
             "manzelka",
             "manželka",
+            "Mary",
             "žena"
           ]
         },
         {
           "type": "synonyms",
-          "value": "muž",
+          "value": "Steve",
           "synonyms": [
             "manžel",
-            "mrtvý"
-          ]
-        },
-        {
-          "type": "synonyms",
-          "value": "policista",
-          "synonyms": [
-            "policista"
+            "mrtvý",
+            "muž",
+            "Steve"
           ]
         }
       ],
@@ -143,7 +170,7 @@
           {
             "values": [
               {
-                "text": "Správně! Vyhrál/a jsi!"
+                "text": "Správně! Rozhodně manželka nemohla vědět, že její manžel byl ubodán k smrti, vždyť nůž ležel pod mrtvým. Vyhrál/a jsi! "
               }
             ],
             "response_type": "text",
@@ -152,8 +179,28 @@
         ]
       },
       "parent": "node_7_1614202457213",
-      "conditions": "@evidence:(manželka zavraždila muže) && @evidence:(žena věděla o noži)",
+      "conditions": "@evidence:(manželka zavraždila muže) &&   @evidence:(žena věděla o noži) && $proreknuti_o_ubodani==1",
       "dialog_node": "node_10_1614202789083"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Steve je můj manžel."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202337716",
+      "conditions": "#kdo_je && @person:Steve",
+      "dialog_node": "node_10_1614627946899",
+      "previous_sibling": "node_9_1614454053458"
     },
     {
       "type": "standard",
@@ -165,7 +212,7 @@
       },
       "conditions": "(@person && !input.text.contains(' ')) OR (@dukaz && !input.text.contains(' '))",
       "dialog_node": "node_3_1614203426909",
-      "previous_sibling": "Vítejte"
+      "previous_sibling": "node_4_1614611431768"
     },
     {
       "type": "standard",
@@ -190,14 +237,69 @@
     {
       "type": "folder",
       "title": "policista",
-      "conditions": "$mode == \"policista\"",
+      "conditions": "$mode == \"david\"",
       "dialog_node": "node_4_1614202428402",
       "previous_sibling": "node_7_1614202337716"
     },
     {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Dorazil jste na místo činu. Před vámi stoji žena jménem Mary."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Ve hře se můžete bavit s různými postavami. Abyste se bavili s konkrétní postavou, napište její jméno  do chatu."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Až budeš znát odpověď, napiš slovo *důkaz*, aby chatbot pochopil, že chceš odpovídat."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Zkus začit rozhovor s ženou jménem Mary a zjisti **co se stalo**."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Napište *Mary*."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#start",
+      "dialog_node": "node_4_1614611431768",
+      "previous_sibling": "Vítejte"
+    },
+    {
       "type": "folder",
-      "title": "manželka",
-      "conditions": "$mode == \"manzelka\"",
+      "title": "Mary",
+      "conditions": "$mode == \"mary\"",
       "dialog_node": "node_7_1614202337716",
       "previous_sibling": "node_3_1614203426909"
     },
@@ -215,7 +317,7 @@
           {
             "values": [
               {
-                "text": "**MANŽELKA: ** Ach, bylo to hrozné!"
+                "text": "**MARY: ** Ach, bylo to hrozné!"
               }
             ],
             "response_type": "text",
@@ -224,7 +326,7 @@
           {
             "values": [
               {
-                "text": "**MANŽELKA: ** Právě jsem se vrátila domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami. Když jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. Další věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni. Steve byl ubodán k smrti v obývacím pokoji a já už jsem nemohla udělat nic. Zavolala jsem na policii a čekala na vás tady. Jeden policista je již v obyváku, ale nepouští mě tam. Prý čeká na Vás."
+                "text": "**MARY: ** Právě jsem se vrátila domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami. Když jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. Další věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni. Steve byl ubodán k smrti v obývacím pokoji a já už jsem nemohla udělat nic. Zavolala jsem na policii a čekala na vás tady. Jeden policista je již v obyváku, ale nepouští mě tam. Prý čeká na Vás."
               }
             ],
             "response_type": "text",
@@ -246,7 +348,7 @@
           {
             "values": [
               {
-                "text": "**Policista: ** Nevíme zatím vůbec nic, když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka. Zatím nevíme ani kvůli čemu zemřel. Jak koukám, na zádech nejsou žádné rány."
+                "text": "**Policista: ** Nevíme zatím vůbec nic, když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka. Zatím nevíme ani kvůli čemu zemřel. Leží obličejem dolů, a pokud koukám správně, na zádech nejsou žádné rány. -- A neotáčeli jsme ho, protože jsme čekali na Vás."
               }
             ],
             "response_type": "text",
@@ -255,7 +357,7 @@
         ]
       },
       "parent": "node_4_1614202428402",
-      "conditions": "#vite-neco",
+      "conditions": "#vite-neco || #co-se-stalo",
       "dialog_node": "node_9_1614456312902"
     },
     {
@@ -303,7 +405,7 @@
           {
             "values": [
               {
-                "text": "Bavíte se s policistou"
+                "text": "Bavíte se s policistou Davidem"
               }
             ],
             "response_type": "text",
@@ -313,9 +415,9 @@
       },
       "parent": "node_3_1614203426909",
       "context": {
-        "mode": "policista"
+        "mode": "david"
       },
-      "conditions": "@person:policista",
+      "conditions": "@person:David",
       "dialog_node": "response_10_1614203728610",
       "previous_sibling": "response_7_1614203611901"
     },
@@ -326,7 +428,7 @@
           {
             "values": [
               {
-                "text": "Jste v mode \"důkaz\". Zkuste napsat kdo zabil muže a proč si to myslíte."
+                "text": "Jsi v režimu \"důkaz\". Zkus napsat kdo zabil muže a proč si to myslíš."
               }
             ],
             "response_type": "text",
@@ -349,7 +451,36 @@
           {
             "values": [
               {
-                "text": "Bavíte se s manželkou"
+                "text": "S mrtvými zatím mluvit neumíš ;) "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Zkus se bavit s živou postavou, ta ti řekne víc :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1614203426909",
+      "conditions": "@person:Steve",
+      "dialog_node": "response_4_1614612870353",
+      "previous_sibling": "response_10_1614203803359"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bavíte se s Mary"
               }
             ],
             "response_type": "text",
@@ -359,9 +490,9 @@
       },
       "parent": "node_3_1614203426909",
       "context": {
-        "mode": "manzelka"
+        "mode": "mary"
       },
-      "conditions": "@person:manželka",
+      "conditions": "@person:Mary",
       "dialog_node": "response_7_1614203611901"
     },
     {
@@ -372,7 +503,34 @@
           {
             "values": [
               {
-                "text": "Dobrý den, jak vám mohu pomoci?"
+                "text": "Před tebou je krátká detektivní hra."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Jsi detektiv."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "** Zavolali tebe na místo činu abys zjistil co se stalo a kdo za to může. **"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Napiš *start* ;) "
               }
             ],
             "response_type": "text",
@@ -398,6 +556,9 @@
               },
               {
                 "text": "Zcela jsem neporozuměl tomu, na co se ptáte."
+              },
+              {
+                "text": ""
               }
             ],
             "response_type": "text",
