@@ -67,13 +67,33 @@
           "text": "jak byl zabit?"
         },
         {
-          "text": "Jak víte, že byl ubodán?"
-        },
-        {
           "text": "Jak zemřel"
         }
       ],
       "description": ""
+    },
+    {
+      "intent": "jak-poznala-ze-je-mrvy",
+      "examples": [
+        {
+          "text": "Jak jste poznala, že je mrtvý?"
+        },
+        {
+          "text": "Jak jste věděla, že je mrtvý?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "jak-vite-jak-zemrel",
+      "examples": [
+        {
+          "text": "Jak víte jak umřel?"
+        },
+        {
+          "text": "Jak víte, že byl ubodán?"
+        }
+      ]
     },
     {
       "intent": "jak-vypada-telo",
@@ -127,6 +147,27 @@
       ]
     },
     {
+      "intent": "kdo-muze-byt-vrah",
+      "examples": [
+        {
+          "text": "Kdo je vrah?"
+        },
+        {
+          "text": "Kdo přál smrt?"
+        },
+        {
+          "text": "Měl manžel nepřátele?"
+        },
+        {
+          "text": "Napadá Vás, kdo může být vrah?"
+        },
+        {
+          "text": "přál někdo smrt"
+        }
+      ],
+      "description": ""
+    },
+    {
       "intent": "kdy",
       "examples": [
         {
@@ -165,6 +206,15 @@
         },
         {
           "text": "neměla by vědět o noži"
+        },
+        {
+          "text": "nemohla jste to vedet"
+        },
+        {
+          "text": "nemohla jste vedet o nozi"
+        },
+        {
+          "text": "vy jste ale vedela o nozi"
         },
         {
           "text": "žena by neměla o tom vědět"
@@ -251,6 +301,15 @@
       ]
     },
     {
+      "intent": "pravidla",
+      "examples": [
+        {
+          "text": "pravidla"
+        }
+      ],
+      "description": ""
+    },
+    {
       "intent": "provokace-obvinujici",
       "examples": [
         {
@@ -280,15 +339,6 @@
           "text": "Kdo zabil manžela?"
         }
       ]
-    },
-    {
-      "intent": "start",
-      "examples": [
-        {
-          "text": "start"
-        }
-      ],
-      "description": ""
     },
     {
       "intent": "vite-neco",
@@ -523,6 +573,26 @@
           {
             "values": [
               {
+                "text": "**MARY: **Dobrý den, Detektive. \n\nDoufám, že se dozvíte kdo zabil mého manžela co nejdřív."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202337716",
+      "conditions": "#pozdrav",
+      "dialog_node": "node_10_1615561415588",
+      "previous_sibling": "node_1_1615555048008"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
                 "text": "Dorazil jsi na místo činu. Před tebou stoji žena jménem Mary.\n\nZkus začit rozhovor s Mary a zjisti **co se stalo**.\n\nNapiš *Mary*."
               }
             ],
@@ -569,7 +639,7 @@
       "parent": "node_7_1614202337716",
       "conditions": "anything_else",
       "dialog_node": "node_1_1614727391493",
-      "previous_sibling": "node_1_1615555048008"
+      "previous_sibling": "node_3_1615636342600"
     },
     {
       "type": "standard",
@@ -650,7 +720,7 @@
           {
             "values": [
               {
-                "text": "**MARY: **To jste mi sám říkal. Nebo možná jsem to nějak zaslechla."
+                "text": "**MARY:** Nevím jak byl zabit... nemůžu to vědět"
               }
             ],
             "response_type": "text",
@@ -661,6 +731,26 @@
       "parent": "node_4_1615554610008",
       "conditions": "#jak-byl-zabit",
       "dialog_node": "node_3_1615555658135"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**MARY: **Podle mě žádné nepřátele neměl."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202337716",
+      "conditions": "#kdo-muze-byt-vrah",
+      "dialog_node": "node_3_1615636342600",
+      "previous_sibling": "node_7_1615562281201"
     },
     {
       "type": "folder",
@@ -676,7 +766,7 @@
           {
             "values": [
               {
-                "text": "**Pár pravidel :**\n\n1) Ve hře se můžeš bavit s různými postavami. Aby ses bavil s konkrétní postavou, napiš její jméno nebo jiné označení postavy do chatu. (např. \"Mary\", \"manželka\")\n\n2) Taky jsi schopen zkoumat okolí. Abys mohl zkoumat okolí, napiš *okolí*.\n\n3) Až budeš znát odpověď, napiš slovo *důkaz*, aby chatbot pochopil, že chceš odpovídat.\n\n4) Kdybys potřeboval pomoc, stačí napsat \"*help*\". \n\n**Napiš \"začít příběh\".**\n"
+                "text": "**Pár pravidel :**\n\n1) Ve hře se můžeš bavit s různými postavami. Aby ses bavil s konkrétní postavou, napiš její jméno nebo jiné označení postavy do chatu. (např. \"Mary\", \"manželka\")\n\n2) Taky jsi schopen zkoumat okolí. Abys mohl zkoumat okolí, napiš *okolí*.\n\n3) Jsou dva způsoby jak vyhrát: \n1. Donutíš zločince to přiznat.\n2. Nebo napišeš slovo *důkaz*, aby chatbot pochopil, že víš, kdo je zločinec a proč, a chatbot tě nasměruje.\n4) Kdybys potřeboval pomoc, stačí napsat \"*help*\". \n\n**Napiš \"začít příběh\".**\n\n"
               }
             ],
             "response_type": "text",
@@ -685,7 +775,7 @@
         ]
       },
       "parent": "node_10_1614726151555",
-      "conditions": "#start",
+      "conditions": "#pravidla",
       "dialog_node": "node_4_1614611431768",
       "previous_sibling": "Vítejte"
     },
@@ -717,7 +807,7 @@
           "mcr": true
         }
       },
-      "conditions": "#provokace-obvinujici || #provokace-zvedava-otazka",
+      "conditions": "(#provokace-obvinujici || #provokace-zvedava-otazka)",
       "dialog_node": "node_4_1614717848188",
       "previous_sibling": "node_4_1614726134794"
     },
@@ -821,7 +911,7 @@
           {
             "values": [
               {
-                "text": "Správně, vyhrál jsi!  Rozhodně manželka nemohla vědět, že její manžel byl ubodán k smrti, vždyť nůž ležel pod mrtvým. Vyhrál/a jsi!"
+                "text": "Správně! Rozhodně manželka nemohla vědět, že její manžel byl ubodán k smrti, vždyť nůž ležel pod mrtvým. Vyhrál/a jsi!"
               }
             ],
             "response_type": "text",
@@ -856,6 +946,19 @@
     },
     {
       "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Z obchodu jsem se vrátila před dvěma hodinami."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
       "parent": "node_7_1614202337716",
       "conditions": "#kdy",
       "dialog_node": "node_5_1615553045480",
@@ -902,7 +1005,7 @@
     },
     {
       "type": "folder",
-      "title": "důkaz",
+      "title": "DELETE_důkaz",
       "conditions": "$mode == \"dukaz\" && $proreknuti_o_ubodani == 1 && $nuz_pod_telem == 1",
       "dialog_node": "node_7_1614202457213",
       "previous_sibling": "node_10_1614704565103"
@@ -939,7 +1042,47 @@
       "parent": "node_4_1614202428402",
       "conditions": "anything_else",
       "dialog_node": "node_7_1614727970014",
-      "previous_sibling": "node_6_1614725101498"
+      "previous_sibling": "node_8_1615637673117"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Nevím, nehýbal se, kolem byla krev. Jsem se hodně vyděsila a utekla."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202337716",
+      "conditions": "#jak-poznala-ze-je-mrvy",
+      "dialog_node": "node_7_1615562281201",
+      "previous_sibling": "node_10_1615561415588"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**MARY:** To jste mi sám říkal. Nebo možná jsem to nějak zaslechla."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1615554610008",
+      "conditions": "#jak-vite-jak-zemrel",
+      "dialog_node": "node_7_1615563027852",
+      "previous_sibling": "node_4_1615555763304"
     },
     {
       "type": "standard",
@@ -963,12 +1106,24 @@
     },
     {
       "type": "standard",
+      "parent": "node_4_1614202428402",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#jak-byl-zabit",
+      "dialog_node": "node_8_1615637673117",
+      "previous_sibling": "node_6_1614725101498"
+    },
+    {
+      "type": "standard",
       "output": {
         "generic": [
           {
             "values": [
               {
-                "text": "**MARY: ** Ach, to je hrozné!\nPrávě jsem se vrátila domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami.  \nKdyž jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. \nDalší věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni. Steve byl ubodán k smrti v obývacím pokoji a já už jsem nemohla udělat nic. Zavolala jsem na policii a čekala na vás tady.\nJeden policista je již v obýváku, ale nepouští mě tam. Prý čeká na Vás."
+                "text": "**MARY: ** Ach, to je hrozné!\n\nVrátila jsem se domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami.  \n\nKdyž jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. \n\nDalší věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni.  Pokradmu jsem nahlédla do obývacího pokoje a vidím, že Steve je mrtvý, že je ubodán k smrti. Vyděsila jsem se a utekla ven volat na policii. A od té doby tu čekám na vás.\n\nJeden policista je již v obýváku, ale nepouští mě tam. Prý čeká na Vás."
               }
             ],
             "response_type": "text",
@@ -1211,6 +1366,44 @@
       "conditions": "@dukaz:dukaz",
       "dialog_node": "response_10_1614729214935",
       "previous_sibling": "response_10_1614203803359"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**POLICISTA:** Jak vidíte podle rán na hrudníku a nože, určitě zemřel kvůli bodnutí nožem."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1615637673117",
+      "conditions": "$nuz_pod_telem == 1",
+      "dialog_node": "response_10_1615637699583"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**POLICISTA:** Nevíme jak zemřel. Snad to zjistíte vy."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1615637673117",
+      "dialog_node": "response_10_1615637769875",
+      "previous_sibling": "response_10_1615637699583"
     },
     {
       "type": "response_condition",
@@ -1489,7 +1682,7 @@
           {
             "values": [
               {
-                "text": "Před tebou je krátká hádanka, která vyžaduje zapojení tvé pozornosti. Abys vyhrál, potřebuješ najít jenom pár informací, které si navzájem protiřečí. **Není třeba hledat motiv zločinu.**\n\nJsi detektiv.\n\n** Zavolali tebe na místo činu abys zjistil co se stalo a kdo za to může. **\n\nNapiš *start* ;) "
+                "text": "Před tebou je krátká hádanka, která vyžaduje zapojení tvé pozornosti. Abys vyhrál, potřebuješ najít jenom pár informací, které si navzájem protiřečí. **Není třeba hledat motiv zločinu.**\n\nJsi detektiv.\n\n** Zavolali tebe na místo činu abys zjistil co se stalo a kdo za to může. **\n\nNapiš *pravidla* ;) "
               }
             ],
             "response_type": "text",
