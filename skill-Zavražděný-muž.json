@@ -15,6 +15,34 @@
       ]
     },
     {
+      "intent": "byla-tu-manzelka",
+      "examples": [
+        {
+          "text": "Byla tu manželka?"
+        },
+        {
+          "text": "Měla manželka přistup sem?"
+        }
+      ]
+    },
+    {
+      "intent": "co-je-kolem",
+      "examples": [
+        {
+          "text": "Co je kolem?"
+        },
+        {
+          "text": "Co je v okolí?"
+        },
+        {
+          "text": "Co se nachází v pokoji?"
+        },
+        {
+          "text": "Co vidím?"
+        }
+      ]
+    },
+    {
       "intent": "co-se-stalo",
       "examples": [
         {
@@ -22,6 +50,73 @@
         },
         {
           "text": "Co se stalo?"
+        }
+      ]
+    },
+    {
+      "intent": "help",
+      "examples": [
+        {
+          "text": "help"
+        },
+        {
+          "text": "nevím co dal"
+        },
+        {
+          "text": "nevím jak dal"
+        },
+        {
+          "text": "pomoc"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "jak-byl-zabit",
+      "examples": [
+        {
+          "text": "Čím ho zabili?"
+        },
+        {
+          "text": "jak byl zabit?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "jak-vypada-telo",
+      "examples": [
+        {
+          "text": "Jak leží tělo?"
+        },
+        {
+          "text": "Jak vypadá mrtvý?"
+        },
+        {
+          "text": "Jak vypadá tělo?"
+        }
+      ]
+    },
+    {
+      "intent": "kde-je-telo",
+      "examples": [
+        {
+          "text": "Je tělo poškozeno?"
+        },
+        {
+          "text": "Jsou na těle nějaké rány?"
+        },
+        {
+          "text": "Jsou nějaké rány?"
+        },
+        {
+          "text": "Kde je mrtvy?"
+        },
+        {
+          "text": "Kde je tělo?"
+        },
+        {
+          "text": "tělo?"
         }
       ]
     },
@@ -38,6 +133,32 @@
           "text": "Odkud znáte?"
         }
       ]
+    },
+    {
+      "intent": "napoveda",
+      "examples": [
+        {
+          "text": "chci napovedu"
+        },
+        {
+          "text": "napoveda"
+        },
+        {
+          "text": "nápověda"
+        }
+      ]
+    },
+    {
+      "intent": "okoli",
+      "examples": [
+        {
+          "text": "okoli"
+        },
+        {
+          "text": "okolí"
+        }
+      ],
+      "description": ""
     },
     {
       "intent": "podekovani",
@@ -107,6 +228,37 @@
       ]
     },
     {
+      "intent": "provokace-obvinujici",
+      "examples": [
+        {
+          "text": "To jste byla vy"
+        },
+        {
+          "text": "to jste udělala vy?"
+        },
+        {
+          "text": "To jste vy zabila muže?"
+        },
+        {
+          "text": "Určitě to jste byla vy."
+        },
+        {
+          "text": "Zabila jste ho."
+        }
+      ]
+    },
+    {
+      "intent": "provokace-zvedava-otazka",
+      "examples": [
+        {
+          "text": "Kdo to byl?"
+        },
+        {
+          "text": "Kdo zabil manžela?"
+        }
+      ]
+    },
+    {
       "intent": "start",
       "examples": [
         {
@@ -120,6 +272,9 @@
       "examples": [
         {
           "text": "Co si myslíte?"
+        },
+        {
+          "text": "Co vis?"
         },
         {
           "text": "Co víte?"
@@ -136,6 +291,15 @@
       ]
     },
     {
+      "intent": "zacit-pribeh",
+      "examples": [
+        {
+          "text": "začit příběh"
+        }
+      ],
+      "description": ""
+    },
+    {
       "intent": "zkusit-otocit",
       "examples": [
         {
@@ -146,6 +310,9 @@
         },
         {
           "text": "Otočíme ho?"
+        },
+        {
+          "text": "otočit tělo"
         },
         {
           "text": "Zkoušel jste ho otočit?"
@@ -176,8 +343,10 @@
           "value": "manželka zavraždila muže",
           "synonyms": [
             "manželka zabila manžela",
+            "manželka zabila muže",
             "manželka zavraždila manžela",
             "manželka zavraždila muže",
+            "Mary zabila Steve",
             "muže zabila žena",
             "muže zavraždila manželka",
             "žena zabila muže",
@@ -238,21 +407,13 @@
   "dialog_nodes": [
     {
       "type": "standard",
-      "output": {
-        "generic": [
-          {
-            "values": [
-              {
-                "text": "Správně! Rozhodně manželka nemohla vědět, že její manžel byl ubodán k smrti, vždyť nůž ležel pod mrtvým. Vyhrál/a jsi! "
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          }
-        ]
-      },
       "parent": "node_7_1614202457213",
-      "conditions": "@evidence:(manželka zavraždila muže) &&   @evidence:(žena věděla o noži) && $proreknuti_o_ubodani==1",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@evidence:(manželka zavraždila muže) ||       @evidence:(žena věděla o noži)",
       "dialog_node": "node_10_1614202789083"
     },
     {
@@ -276,16 +437,103 @@
       "previous_sibling": "node_9_1614454053458"
     },
     {
+      "type": "folder",
+      "title": "zkoumání okolí",
+      "conditions": "$mode == \"okoli\"",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_10_1614704565103",
+      "previous_sibling": "node_4_1614202428402"
+    },
+    {
+      "type": "folder",
+      "title": "start",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_10_1614726151555"
+    },
+    {
       "type": "standard",
-      "title": "Nastavení režimu hry",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Dorazil jsi na místo činu. Před tebou stoji žena jménem Mary."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Zkus začit rozhovor s Mary a zjisti **co se stalo**."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Napiš *Mary*."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614726151555",
+      "conditions": "#zacit-pribeh",
+      "dialog_node": "node_1_1614719260960",
+      "previous_sibling": "node_4_1614611431768"
+    },
+    {
+      "type": "standard",
+      "parent": "node_4_1614726134794",
       "metadata": {
         "_customization": {
           "mcr": true
         }
       },
-      "conditions": "(@person && !input.text.contains(' ')) OR (@dukaz && !input.text.contains(' '))",
+      "conditions": "#napoveda",
+      "dialog_node": "node_1_1614726823894",
+      "previous_sibling": "node_7_1614726571289"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**MARY: **Nevím jak Vám na tuto otázku odpovědět. Řekla jsem Vám všechno, co vím!"
+              },
+              {
+                "text": "Alina tohoto chatbota ještě nenaučila odpovídat na takové dotazy, ale naučí ;)\n\nAle zkus přeformulovat :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202337716",
+      "conditions": "anything_else",
+      "dialog_node": "node_1_1614727391493",
+      "previous_sibling": "node_10_1614627946899"
+    },
+    {
+      "type": "standard",
+      "title": "nastavení režimu hry",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "(@person && !input.text.contains(' ')) OR (@dukaz && !input.text.contains(' ')) || (#okoli && !input.text.contains(' '))",
       "dialog_node": "node_3_1614203426909",
-      "previous_sibling": "node_4_1614611431768"
+      "previous_sibling": "node_4_1614717848188"
     },
     {
       "type": "standard",
@@ -308,6 +556,26 @@
       "previous_sibling": "node_9_1614456700495"
     },
     {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "#byla-tu-manzelka",
+      "dialog_node": "node_3_1614705194032",
+      "previous_sibling": "node_9_1614633274931"
+    },
+    {
       "type": "folder",
       "title": "policista",
       "conditions": "$mode == \"david\"",
@@ -321,43 +589,7 @@
           {
             "values": [
               {
-                "text": "Dorazil jsi na místo činu. Před vámi stoji žena jménem Mary."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          },
-          {
-            "values": [
-              {
-                "text": "Ve hře se můžeš bavit s různými postavami. Aby ses bavil s konkrétní postavou, napiš její jméno  do chatu."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          },
-          {
-            "values": [
-              {
-                "text": "Až budeš znát odpověď, napiš slovo *důkaz*, aby chatbot pochopil, že chceš odpovídat."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          },
-          {
-            "values": [
-              {
-                "text": "Zkus začit rozhovor s ženou jménem Mary a zjisti **co se stalo**."
-              }
-            ],
-            "response_type": "text",
-            "selection_policy": "sequential"
-          },
-          {
-            "values": [
-              {
-                "text": "Napiš *Mary*."
+                "text": "**Pár pravidel :**\n\n1) Ve hře se můžeš bavit s různými postavami. Aby ses bavil s konkrétní postavou, napiš její jméno nebo jiné označení postavy do chatu. (např. \"Daniel\", \"manželka\")\n\n2) Taky jsi schopen zkoumat okolí. Abys mohl zkoumat okolí, napiš *okolí*.\n\n3) Až budeš znát odpověď, napiš slovo *důkaz*, aby chatbot pochopil, že chceš odpovídat.\n\n4) Kdybys potřeboval pomoc, stačí napsat \"*help*\". \n\n**Napiš \"začít příběh\".**\n"
               }
             ],
             "response_type": "text",
@@ -365,9 +597,131 @@
           }
         ]
       },
+      "parent": "node_10_1614726151555",
       "conditions": "#start",
       "dialog_node": "node_4_1614611431768",
       "previous_sibling": "Vítejte"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Jste v obývácím pokoji. Stojí tu gauč a vedle gauče leží muž obličejem dolů."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614704565103",
+      "conditions": "#co-je-kolem",
+      "dialog_node": "node_4_1614705933636",
+      "previous_sibling": "node_9_1614705623018"
+    },
+    {
+      "type": "standard",
+      "title": "provokace chatbota hráčem",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#provokace-obvinujici || #provokace-zvedava-otazka",
+      "dialog_node": "node_4_1614717848188",
+      "previous_sibling": "node_4_1614726134794"
+    },
+    {
+      "type": "folder",
+      "title": "help pro hráče",
+      "conditions": "",
+      "dialog_node": "node_4_1614726134794",
+      "previous_sibling": "node_10_1614726151555"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hm... Bud' se ptáš na něco, co nepotřebuješ vědět, nebo na něco důležitého, ale chatbot tebe nechápe... :("
+              },
+              {
+                "text": "Alina tohoto chatbota ještě nenaučila odpovídat na takové dotazy, ale naučí ;)\n\nAle zkus přeformulovat :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614704565103",
+      "conditions": "anything_else",
+      "dialog_node": "node_4_1614728161327",
+      "previous_sibling": "node_4_1614705933636"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Zkus, prosím tě, přeformulovat."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614202457213",
+      "conditions": "anything_else",
+      "dialog_node": "node_4_1614729516541",
+      "previous_sibling": "node_10_1614202789083"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tělo leží obličejem dolů, na zádech nejsou žádné rány."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614704565103",
+      "conditions": "#jak-vypada-telo || #kde-je-telo || @person:Steve",
+      "dialog_node": "node_6_1614704834558"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**POLICISTA: **Je hned před Vámi. Chudák, leží obličejem dolů."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "#kde-je-telo",
+      "dialog_node": "node_6_1614725101498",
+      "previous_sibling": "node_3_1614705194032"
     },
     {
       "type": "folder",
@@ -379,9 +733,20 @@
     {
       "type": "folder",
       "title": "důkaz",
-      "conditions": "$mode == \"dukaz\"",
+      "conditions": "$mode == \"dukaz\" && $proreknuti_o_ubodani == 1 && $nuz_pod_telem == 1",
       "dialog_node": "node_7_1614202457213",
-      "previous_sibling": "node_4_1614202428402"
+      "previous_sibling": "node_10_1614704565103"
+    },
+    {
+      "type": "standard",
+      "parent": "node_4_1614726134794",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#help",
+      "dialog_node": "node_7_1614726571289"
     },
     {
       "type": "standard",
@@ -390,7 +755,30 @@
           {
             "values": [
               {
-                "text": "**MARY: ** Ach, bylo to hrozné!"
+                "text": "**POLICISTA: **Bohužel, pane, nejsem schopen Vám odpovědět na Vaši otázku..."
+              },
+              {
+                "text": "Alina tohoto chatbota ještě nenaučila odpovídat na takové dotazy, ale naučí ;)\n\nAle zkus přeformulovat :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "anything_else",
+      "dialog_node": "node_7_1614727970014",
+      "previous_sibling": "node_6_1614725101498"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**MARY: ** Ach, to je hrozné!"
               }
             ],
             "response_type": "text",
@@ -399,7 +787,34 @@
           {
             "values": [
               {
-                "text": "**MARY: ** Právě jsem se vrátila domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami. Když jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. Další věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni. Steve byl ubodán k smrti v obývacím pokoji a já už jsem nemohla udělat nic. Zavolala jsem na policii a čekala na vás tady. Jeden policista je již v obyváku, ale nepouští mě tam. Prý čeká na Vás."
+                "text": "Právě jsem se vrátila domů z obchodu a chtěla jsem aby mi Steve pomohl s taškami.  "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Když jsem otevřela dveře, hned jsem ucítila, že něco není v pořádku, ale než jsem stihla něco udělat, někdo mi zakryl ústa a nos. "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Další věc, kterou si pamatuji, je, že jsem se probudila na podlaze v kuchyni. Steve byl ubodán k smrti v obývacím pokoji a já už jsem nemohla udělat nic. Zavolala jsem na policii a čekala na vás tady."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [
+              {
+                "text": "Jeden policista je již v obýváku, ale nepouští mě tam. Prý čeká na Vás."
               }
             ],
             "response_type": "text",
@@ -421,7 +836,7 @@
           {
             "values": [
               {
-                "text": "**Policista: ** Nevíme zatím vůbec nic, když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka. Zatím nevíme ani kvůli čemu zemřel. Leží obličejem dolů, a pokud koukám správně, na zádech nejsou žádné rány."
+                "text": "**Policista: ** Nevíme zatím vůbec nic. Čekali jsme na Vás. Dokonce nevíme ani jak zemřel. "
               }
             ],
             "response_type": "text",
@@ -440,7 +855,7 @@
           {
             "values": [
               {
-                "text": "**POLICISTA: ** Ne, ale můžu to zkusit."
+                "text": "**POLICISTA: ** Neotáčeli jsme ho, ale můžu to zkusit."
               }
             ],
             "response_type": "text",
@@ -467,6 +882,9 @@
         ]
       },
       "parent": "node_4_1614202428402",
+      "context": {
+        "nuz_pod_telem": 1
+      },
       "conditions": "#zkusit-otocit",
       "dialog_node": "node_9_1614456700495",
       "previous_sibling": "node_9_1614456312902"
@@ -478,7 +896,7 @@
           {
             "values": [
               {
-                "text": "**Policista: **O, už jste dorazil, rád Vás vidím!"
+                "text": "**POLICISTA: **O, už jste dorazil, rád Vás vidím!"
               }
             ],
             "response_type": "text",
@@ -490,6 +908,29 @@
       "conditions": "#pozdrav",
       "dialog_node": "node_9_1614633274931",
       "previous_sibling": "node_3_1614457617931"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Otočil jsi tělo. Před tvými očima se objevil nůž, který se předtím skrýval pod tělem mrtvého.\n\nNa těle jsou několik bodných ran. Rozhodně zemřel kvůli bodnutí nožem."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614704565103",
+      "context": {
+        "nuz_pod_telem": 1
+      },
+      "conditions": "#zkusit-otocit",
+      "dialog_node": "node_9_1614705623018",
+      "previous_sibling": "node_6_1614704834558"
     },
     {
       "type": "response_condition",
@@ -533,9 +974,87 @@
       "context": {
         "mode": "dukaz"
       },
-      "conditions": "@dukaz:dukaz",
+      "conditions": "@dukaz:dukaz && $proreknuti_o_ubodani == 1 && $nuz_pod_telem == 1",
       "dialog_node": "response_10_1614203803359",
       "previous_sibling": "response_10_1614203728610"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "** MARY: **Nebyla jsem to já! Nezabila jsem ho. To je přece můj manžel. Miluji ho!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614717848188",
+      "conditions": "#provokace-obvinujici",
+      "dialog_node": "response_10_1614718110614"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Možná je dobrý nápad najít nějaké rány na těle."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614726571289",
+      "conditions": "$nuz_pod_telem == null",
+      "dialog_node": "response_10_1614726602449",
+      "previous_sibling": "response_4_1614726649035"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Nemáš všechny informace, abys správně vyřešil případ."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1614203426909",
+      "conditions": "@dukaz:dukaz",
+      "dialog_node": "response_10_1614729214935",
+      "previous_sibling": "response_10_1614203803359"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Je třeba se zaměřit na slova manželky. Zda se, že ví něco, co by neměla."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1614726823894",
+      "conditions": "$proreknuti_o_ubodani == 1 && $nuz_pod_telem == 1",
+      "dialog_node": "response_1_1614727061294"
     },
     {
       "type": "response_condition",
@@ -564,7 +1083,7 @@
       "parent": "node_3_1614203426909",
       "conditions": "@person:Steve",
       "dialog_node": "response_4_1614612870353",
-      "previous_sibling": "response_10_1614203803359"
+      "previous_sibling": "response_10_1614729214935"
     },
     {
       "type": "response_condition",
@@ -573,7 +1092,89 @@
           {
             "values": [
               {
-                "text": "Bavíte se s Mary"
+                "text": "Zkoušel jsi mluvit s manželkou mrtvého?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614726571289",
+      "conditions": "$proreknuti_o_ubodani == null",
+      "dialog_node": "response_4_1614726649035"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Můžete zkoumat okolí."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_3_1614203426909",
+      "context": {
+        "mode": "okoli"
+      },
+      "conditions": "#okoli",
+      "dialog_node": "response_5_1614704716597",
+      "previous_sibling": "response_4_1614612870353"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Už máš všechno info abys vyřešil tuhle hádanku.  Kdybys chtěl nápovědu, napiš \"chci nápovědu\"."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1614726571289",
+      "conditions": "$nuz_pod_telem == 1 && $proreknuti_o_ubodani == 1",
+      "dialog_node": "response_5_1614726687475",
+      "previous_sibling": "response_10_1614726602449"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Proč si to myslíš?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614202789083",
+      "conditions": "@evidence:(manželka zavraždila muže)",
+      "dialog_node": "response_6_1614719930519",
+      "previous_sibling": "response_8_1614720176637"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Bavíte se s Mary."
               }
             ],
             "response_type": "text",
@@ -589,6 +1190,85 @@
       "dialog_node": "response_7_1614203611901"
     },
     {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ze začátku zkus napsat *help*."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_1_1614726823894",
+      "conditions": "$proreknuti_o_ubodani == null || $nuz_pod_telem == null",
+      "dialog_node": "response_7_1614727090116",
+      "previous_sibling": "response_1_1614727061294"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Správně! Rozhodně manželka nemohla vědět, že její manžel byl ubodán k smrti, vždyť nůž ležel pod mrtvým. Vyhrál/a jsi! "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614202789083",
+      "conditions": "@evidence:(manželka zavraždila muže) AND @evidence:(žena věděla o noži)",
+      "dialog_node": "response_8_1614720176637"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "** MARY: **Nevím kdo to byl. Uspali mě."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614717848188",
+      "conditions": "#provokace-zvedava-otazka",
+      "dialog_node": "response_9_1614718155080",
+      "previous_sibling": "response_10_1614718110614"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Správně! Rozhodně manželka nemohla vědět, že její manžel byl ubodán k smrti, vždyť nůž ležel pod mrtvým. Vyhrál/a jsi! "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1614202789083",
+      "conditions": "@evidence:(žena věděla o noži)",
+      "dialog_node": "response_9_1614729835282",
+      "previous_sibling": "response_6_1614719930519"
+    },
+    {
       "type": "standard",
       "title": "Start hry",
       "output": {
@@ -596,7 +1276,7 @@
           {
             "values": [
               {
-                "text": "Před tebou je krátká detektivní hra."
+                "text": "Před tebou je krátká detektivní hra. Abys vyhrál, potřebuješ najít pár informací, které si navzájem protiřečí. "
               }
             ],
             "response_type": "text",
@@ -631,6 +1311,7 @@
           }
         ]
       },
+      "parent": "node_10_1614726151555",
       "conditions": "welcome",
       "dialog_node": "Vítejte"
     },
@@ -645,13 +1326,13 @@
                 "text": "Nerozumím. Zkuste přeformulovat váš dotaz."
               },
               {
-                "text": "Mohl byste se zeptat ještě jednou a trochu jinak? Neporozuměl jsem."
+                "text": "Alina tohoto chatbota ještě nenaučila odpovídat na takové dotazy, ale naučí ;)\n\nAle zkus přeformulovat :)"
               },
               {
                 "text": "Zcela jsem neporozuměl tomu, na co se ptáte."
               },
               {
-                "text": ""
+                "text": "Mohl byste se zeptat ještě jednou a trochu jinak? Neporozuměl jsem."
               }
             ],
             "response_type": "text",
