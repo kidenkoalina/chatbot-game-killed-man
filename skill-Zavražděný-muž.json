@@ -40,6 +40,73 @@
       ]
     },
     {
+      "intent": "podekovani",
+      "examples": [
+        {
+          "text": "Děkuji"
+        },
+        {
+          "text": "Dekuju"
+        },
+        {
+          "text": "Děkuju"
+        },
+        {
+          "text": "Dik"
+        },
+        {
+          "text": "Dík"
+        },
+        {
+          "text": "Díky"
+        },
+        {
+          "text": "thx"
+        }
+      ]
+    },
+    {
+      "intent": "pozdrav",
+      "examples": [
+        {
+          "text": "ahoj"
+        },
+        {
+          "text": "ahojky"
+        },
+        {
+          "text": "cau"
+        },
+        {
+          "text": "čau"
+        },
+        {
+          "text": "dobré ráno"
+        },
+        {
+          "text": "dobry den"
+        },
+        {
+          "text": "dobrý den"
+        },
+        {
+          "text": "dobrý večer"
+        },
+        {
+          "text": "nazdar"
+        },
+        {
+          "text": "nazdár"
+        },
+        {
+          "text": "zdarek"
+        },
+        {
+          "text": "zdárek"
+        }
+      ]
+    },
+    {
       "intent": "start",
       "examples": [
         {
@@ -55,6 +122,9 @@
           "text": "Co si myslíte?"
         },
         {
+          "text": "Co víte?"
+        },
+        {
           "text": "Dozvěděl jste se něco?"
         },
         {
@@ -68,6 +138,9 @@
     {
       "intent": "zkusit-otocit",
       "examples": [
+        {
+          "text": "Co na přední časti těla?"
+        },
         {
           "text": "Otáčel jste ho?"
         },
@@ -248,7 +321,7 @@
           {
             "values": [
               {
-                "text": "Dorazil jste na místo činu. Před vámi stoji žena jménem Mary."
+                "text": "Dorazil jsi na místo činu. Před vámi stoji žena jménem Mary."
               }
             ],
             "response_type": "text",
@@ -257,7 +330,7 @@
           {
             "values": [
               {
-                "text": "Ve hře se můžete bavit s různými postavami. Abyste se bavili s konkrétní postavou, napište její jméno  do chatu."
+                "text": "Ve hře se můžeš bavit s různými postavami. Aby ses bavil s konkrétní postavou, napiš její jméno  do chatu."
               }
             ],
             "response_type": "text",
@@ -284,7 +357,7 @@
           {
             "values": [
               {
-                "text": "Napište *Mary*."
+                "text": "Napiš *Mary*."
               }
             ],
             "response_type": "text",
@@ -338,7 +411,7 @@
       "context": {
         "proreknuti_o_ubodani": 1
       },
-      "conditions": "#co-se-stalo",
+      "conditions": "#co-se-stalo || #vite-neco",
       "dialog_node": "node_9_1614454053458"
     },
     {
@@ -348,7 +421,7 @@
           {
             "values": [
               {
-                "text": "**Policista: ** Nevíme zatím vůbec nic, když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka. Zatím nevíme ani kvůli čemu zemřel. Leží obličejem dolů, a pokud koukám správně, na zádech nejsou žádné rány. -- A neotáčeli jsme ho, protože jsme čekali na Vás."
+                "text": "**Policista: ** Nevíme zatím vůbec nic, když jsem sem dorazil, uzamknul jsem tuto místnost, aby se sem nemohl dostat nikdo. Ani manželka. Zatím nevíme ani kvůli čemu zemřel. Leží obličejem dolů, a pokud koukám správně, na zádech nejsou žádné rány."
               }
             ],
             "response_type": "text",
@@ -397,6 +470,26 @@
       "conditions": "#zkusit-otocit",
       "dialog_node": "node_9_1614456700495",
       "previous_sibling": "node_9_1614456312902"
+    },
+    {
+      "type": "standard",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "**Policista: **O, už jste dorazil, rád Vás vidím!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1614202428402",
+      "conditions": "#pozdrav",
+      "dialog_node": "node_9_1614633274931",
+      "previous_sibling": "node_3_1614457617931"
     },
     {
       "type": "response_condition",
